@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class AdminUserSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     public function run(): void
     {
@@ -16,7 +16,7 @@ class AdminUserSeeder extends Seeder
             'email' => 'student@example.com',
             'password' => Hash::make('test123'),
             'role' => 'user',
-            'position' => 'student',
+            'position' => 'Student',
         ]);
 
         // Admin - Industry
@@ -24,35 +24,35 @@ class AdminUserSeeder extends Seeder
             'name' => 'Company',
             'email' => 'company@example.com',
             'password' => Hash::make('test123'),
-            'role' => 'admin',
-            'position' => 'company',
+            'role' => 'user',
+            'position' => 'Company',
         ]);
 
         // Admin - Academic Advisor
         User::factory()->create([
             'name' => 'Academic Advisor',
-            'email' => 'aa@example.com',
+            'email' => 'advisor@example.com',
             'password' => Hash::make('test123'),
-            'role' => 'admin',
-            'position' => 'advisor',
+            'role' => 'educator',
+            'position' => 'Advisor',
         ]);
 
         // Admin - Supervisor
         User::factory()->create([
             'name' => 'Supervisor',
-            'email' => 'sv@example.com',
+            'email' => 'supervisor@example.com',
             'password' => Hash::make('test123'),
-            'role' => 'admin',
-            'position' => 'supervisor',
+            'role' => 'educator',
+            'position' => 'Supervisor',
         ]);
         
         // Admin - SuperAdmin
         User::factory()->create([
             'name' => 'Super Admin',
-            'email' => 'sa@example.com',
+            'email' => 'superadmin@example.com',
             'password' => Hash::make('test123'),
             'role' => 'admin',
-            'position' => 'superadmin',
+            'position' => 'Super Admin',
         ]);
 
     }

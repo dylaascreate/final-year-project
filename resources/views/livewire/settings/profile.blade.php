@@ -9,6 +9,9 @@ use Livewire\Volt\Component;
 new class extends Component {
     public string $name = '';
     public string $email = '';
+    public ?string $requested_position = null;
+
+    public $showReviewMessage = false;
 
     /**
      * Mount the component.
@@ -17,6 +20,7 @@ new class extends Component {
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->requested_position = Auth::user()->requested_position;
     }
 
     /**
@@ -28,6 +32,8 @@ new class extends Component {
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+
+            'requested_position' => ['nullable', 'string'],
 
             'email' => [
                 'required',
@@ -48,6 +54,10 @@ new class extends Component {
         $user->save();
 
         $this->dispatch('profile-updated', name: $user->name);
+
+        if (!empty($this->requested_position)) {
+            $this->showReviewMessage = true;
+        }
     }
 
     /**
@@ -76,8 +86,25 @@ new class extends Component {
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
             <flux:input wire:model="position" :label="__('Position')" type="text" placeholder="{{ auth()->user()->position }}" readonly/>
-
-            <div>
+            <flux:select
+                wire:model="requested_position"
+                :label="__('Request New Position')"
+                type="text"
+            >
+                <option value="">-- Select Position --</option>
+                <option value="Student">Student</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Academic Advisor">Academic Advisor</option>
+                <option value="Company">Company</option>
+                <option value="Super Admin">Super Admin</option>
+            </flux:select>
+                @if ($showReviewMessage)
+                    <flux:text class="text-sm text-blue-600 mt-1">
+                        {{ __('Request will be reviewed by admin.') }}
+                    </flux:text>
+                @endif
+    
+            
                 <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
 
                 @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
@@ -101,12 +128,15 @@ new class extends Component {
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full">{{ __('Save') }}</flux:button>
+                    <flux:button variant="primary" type="submit" class="w-full">
+                        {{ __('Save') }}
+                    </flux:button>
                 </div>
 
                 <x-action-message class="me-3" on="profile-updated">
                     {{ __('Saved.') }}
                 </x-action-message>
+
             </div>
         </form>
 

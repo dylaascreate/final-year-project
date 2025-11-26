@@ -27,8 +27,9 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'email_verified_at' => now(),
             'password' => self::$password ??= Hash::make('password'),
-            'role' => 'user', // Default role
-            'position' => 'customer', // Default role
+            'role' => 'user', // Default
+            'position' => 'user', // Default
+            'requested_position' => 'user', // Default
             'remember_token' => Str::random(10),
         ];
     }

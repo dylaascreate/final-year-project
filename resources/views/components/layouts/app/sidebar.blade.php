@@ -35,7 +35,7 @@
                 </flux:navlist.group>
 
                 @if($user->role === 'admin')
-                    @if(in_array($user->position, ['superadmin']))
+                    @if(in_array($user->position, ['Super Admin']))
                         <flux:navlist.group expandable  :expanded="false"  heading="Admin Tools" class="grid">
                             <flux:navlist.item icon="inbox-stack">
                                 {{ __('Manage Roadmaps') }}
@@ -48,9 +48,9 @@
                             </flux:navlist.item>
 
                             <flux:navlist.item icon="user-plus"
-                                {{-- badge="{{ \App\Models\User::where('role', 'user')->count() }}" --}}
-                                {{-- :href="route('manage-customer')" --}}
-                                {{-- :current="request()->routeIs('manage-customer')" --}}
+                                badge="{{ \App\Models\User::where('role', 'user')->count() }}"
+                                :href="route('admin.manage-users')"
+                                :current="request()->routeIs('admin.manage-users')"
                                 wire:navigate>
                                 {{ __('Manage Users') }}
                             </flux:navlist.item>
@@ -82,7 +82,7 @@
                             </flux:navlist.item>
                         </flux:navlist.group>
                     @endif
-                    @if(in_array($user->position, ['supervisor']))
+                    @if(in_array($user->position, ['Supervisor']))
                         <flux:navlist.group expandable :expanded="false" heading="Supervisor Tools" class="grid">
                             <flux:navlist.item icon="users">
                                 {{ __('View Assigned Students') }}
@@ -93,7 +93,7 @@
                         </flux:navlist.group>
                     @endif
 
-                    @if(in_array($user->position, ['advisor']))
+                    @if(in_array($user->position, ['Advisor']))
                         <flux:navlist.group expandable :expanded="false" heading="Advisor Tools" class="grid">
                             <flux:navlist.item icon="academic-cap">
                                 {{ __('View Student Progress') }}
@@ -103,18 +103,17 @@
                             </flux:navlist.item>
                         </flux:navlist.group>
                     @endif
-
-                    @if(in_array($user->position, ['company']))
+                @endif
+                
+                @if(in_array($user->position, ['Company']))
                         <flux:navlist.group expandable :expanded="false" heading="Company Tools" class="grid">
                             <flux:navlist.item icon="briefcase">
                                 {{ __('View Active Projects') }}
                             </flux:navlist.item>
                             <flux:navlist.item icon="globe-alt">
-                                {{ __('Manage Partnerships') }}
+                                {{ __('Manage Internships') }}
                             </flux:navlist.item>
                         </flux:navlist.group>
-                    @endif
-
                 @endif
             </flux:navlist>
 
