@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../ic-poms"
+		},
+		{
+			"path": "../../../../laragon/www/Yummy"
+		}
+	],
+	"settings": {}
+}
